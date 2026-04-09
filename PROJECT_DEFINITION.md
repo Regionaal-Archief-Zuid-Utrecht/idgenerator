@@ -60,7 +60,7 @@ Returns service status and database connectivity.
 ### Request Parameters
 
 | Parameter | Required | Type | Description | Valid Values |
-|-----------|----------|------|-------------|--------------||
+|-----------|----------|------|-------------|--------------|
 | `producer` | Yes | string | Producer identifier | e.g., `g0352`, `k50907905` |
 | `dataset` | Yes | string | Archive/dataset identifier | Any non-empty string |
 | `type` | Yes | string | Entity type | `Informatieobject` or `Bestand` |
@@ -82,7 +82,7 @@ Returns service status and database connectivity.
   "type": "Informatieobject",
   "aggregationlevel": "Archiefstuk",
   "inventarisnummer": "INV-2024-001",
-  "filepath": "data /documents/file.pdf"
+  "filepath": "data/documents/file.pdf"
 }
 ```
 
