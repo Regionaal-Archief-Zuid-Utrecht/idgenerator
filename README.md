@@ -7,6 +7,7 @@ Internal service for generating unique RAZU identifiers for the RAZU e-depot sys
 - **[PROJECT_DEFINITION.md](PROJECT_DEFINITION.md)** - Complete functional specification, API documentation, and validation rules
 - **[TEST_SCENARIOS.md](TEST_SCENARIOS.md)** - Comprehensive test scenarios
 - **[CODING_GUIDELINES.md](CODING_GUIDELINES.md)** - Coding standards
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Development workflow and contribution guidelines
 
 ## Quick Start
 
@@ -14,7 +15,7 @@ Internal service for generating unique RAZU identifiers for the RAZU e-depot sys
 
 ```bash
 python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -65,7 +66,3 @@ Returns:
 ```
 
 See [PROJECT_DEFINITION.md](PROJECT_DEFINITION.md) for complete API documentation and validation rules.
-
-## Development
-
-This project was developed with AI assistance following a documentation-first approach. See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow.
