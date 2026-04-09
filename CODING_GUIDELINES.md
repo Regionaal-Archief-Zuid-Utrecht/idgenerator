@@ -1,5 +1,7 @@
 # Coding Guidelines
 
+RAZU Coding Guideline v0.1  
+
 ## Naming
 
 - **Variables and functions**: `snake_case` — e.g. `archive_creator_id`
