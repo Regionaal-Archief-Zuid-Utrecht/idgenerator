@@ -18,7 +18,7 @@ class Database:
                 producer TEXT NOT NULL,
                 dataset TEXT NOT NULL,
                 type TEXT NOT NULL,
-                aggregationlevel TEXT NOT NULL,
+                aggregationlevel TEXT,
                 inventarisnummer TEXT,
                 filepath TEXT,
                 unique_number INTEGER NOT NULL,
@@ -45,7 +45,7 @@ class Database:
         producer: str,
         dataset: str,
         type: str,
-        aggregationlevel: str,
+        aggregationlevel: Optional[str],
         inventarisnummer: Optional[str],
         filepath: Optional[str]
     ) -> Optional[int]:
@@ -55,7 +55,7 @@ class Database:
         cursor.execute("""
             SELECT unique_number FROM identifiers
             WHERE producer = ? AND dataset = ? AND type = ? 
-            AND aggregationlevel = ? AND inventarisnummer IS ? AND filepath IS ?
+            AND aggregationlevel IS ? AND inventarisnummer IS ? AND filepath IS ?
         """, (producer, dataset, type, aggregationlevel, inventarisnummer, filepath))
         
         row = cursor.fetchone()
@@ -83,7 +83,7 @@ class Database:
         producer: str,
         dataset: str,
         type: str,
-        aggregationlevel: str,
+        aggregationlevel: Optional[str],
         inventarisnummer: Optional[str],
         filepath: Optional[str],
         unique_number: int

@@ -12,7 +12,7 @@ class IdentifierGenerator:
         producer: str,
         dataset: str,
         type: str,
-        aggregationlevel: str,
+        aggregationlevel: Optional[str] = None,
         inventarisnummer: Optional[str] = None,
         filepath: Optional[str] = None
     ) -> Tuple[str, bool, str]:

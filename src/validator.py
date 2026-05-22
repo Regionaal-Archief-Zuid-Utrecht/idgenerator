@@ -20,9 +20,10 @@ class Validator:
     ):
         Validator._validate_required_params(producer, dataset, type, aggregationlevel)
         Validator._validate_enum_values(type, aggregationlevel)
-        Validator._validate_aggregation_level_rules(
-            aggregationlevel, inventarisnummer, filepath
-        )
+        if aggregationlevel is not None:
+            Validator._validate_aggregation_level_rules(
+                aggregationlevel, inventarisnummer, filepath
+            )
 
     @staticmethod
     def _validate_required_params(
@@ -37,7 +38,7 @@ class Validator:
             raise ValidationError("Missing or empty required parameter: dataset")
         if not type or not type.strip():
             raise ValidationError("Missing or empty required parameter: type")
-        if not aggregationlevel or not aggregationlevel.strip():
+        if type != "Bestand" and (not aggregationlevel or not aggregationlevel.strip()):
             raise ValidationError("Missing or empty required parameter: aggregationlevel")
 
     @staticmethod
@@ -46,7 +47,7 @@ class Validator:
             raise ValidationError(
                 f"Invalid type: {type}. Must be one of {Validator.VALID_TYPES}"
             )
-        if aggregationlevel not in Validator.VALID_AGGREGATION_LEVELS:
+        if aggregationlevel is not None and aggregationlevel not in Validator.VALID_AGGREGATION_LEVELS:
             raise ValidationError(
                 f"Invalid aggregationlevel: {aggregationlevel}. "
                 f"Must be one of {Validator.VALID_AGGREGATION_LEVELS}"
