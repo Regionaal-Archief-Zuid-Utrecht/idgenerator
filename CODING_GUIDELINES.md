@@ -2,6 +2,10 @@
 
 RAZU Coding Guideline v0.1  
 
+## Language
+
+Names and comments are in English.
+
 ## Naming
 
 - **Variables and functions**: `snake_case` — e.g. `archive_creator_id`
