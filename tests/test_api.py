@@ -17,8 +17,10 @@ class TestGenerateEndpoint:
         data = json.loads(response.data)
         assert "identifier" in data
         assert "is_new" in data
+        assert "stepped_dir" in data
         assert data["identifier"] == "nl-wbdrazu-g0352-689-1"
         assert data["is_new"] is True
+        assert data["stepped_dir"] == "000/000/"
 
     def test_generate_duplicate_request_returns_same_identifier(self, client):
         payload = {
@@ -43,6 +45,7 @@ class TestGenerateEndpoint:
         assert data1["identifier"] == data2["identifier"]
         assert data1["is_new"] is True
         assert data2["is_new"] is False
+        assert data1["stepped_dir"] == data2["stepped_dir"]
 
     def test_generate_missing_producer_returns_400(self, client):
         response = client.post('/generate',
@@ -106,6 +109,7 @@ class TestGenerateEndpoint:
         data = json.loads(response.data)
         assert data["identifier"].startswith("nl-wbdrazu-g0352-689-")
         assert data["is_new"] is True
+        assert data["stepped_dir"] == "000/000/"
 
     def test_generate_malformed_json_returns_400(self, client):
         response = client.post('/generate',

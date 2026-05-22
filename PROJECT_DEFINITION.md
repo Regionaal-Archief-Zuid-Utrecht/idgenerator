@@ -93,7 +93,8 @@ Returns service status and database connectivity.
 ```json
 {
   "identifier": "nl-wbdrazu-g0352-689-815224",
-  "is_new": true
+  "is_new": true,
+  "stepped_dir": "000/815/"
 }
 ```
 
@@ -102,6 +103,25 @@ Returns service status and database connectivity.
 - `is_new`: 
   - `true` - New identifier created for this unique combination
   - `false` - Existing identifier retrieved from database
+- `stepped_dir` - part of the full storage path intended to prevent too many files in a single directory
+
+**`stepped_dir` logic:**
+
+The `stepped_dir` value is derived from the numeric part of the identifier. It splits the number into directory steps of one million and one thousand:
+
+- The first directory is the number of complete millions, padded to three digits
+- The second directory is the number of complete thousands within the current million, padded to three digits
+- The result always ends with a trailing slash
+
+Examples:
+
+| Unique number | Millions step | Thousands step | `stepped_dir` |
+|---------------|---------------|----------------|---------------|
+| `1` | `000` | `000` | `000/000/` |
+| `999` | `000` | `000` | `000/000/` |
+| `1000` | `000` | `001` | `000/001/` |
+| `815224` | `000` | `815` | `000/815/` |
+| `1000000` | `001` | `000` | `001/000/` |
 
 #### Error Response (400 Bad Request)
 

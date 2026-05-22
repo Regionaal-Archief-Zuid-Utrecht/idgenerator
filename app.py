@@ -27,14 +27,15 @@ def generate_identifier():
         inventarisnummer = data.get('inventarisnummer')
         filepath = data.get('filepath')
         
-        identifier, is_new = generator.generate(
+        identifier, is_new, stepped_dir = generator.generate(
             producer, dataset, type_val, aggregationlevel,
             inventarisnummer, filepath
         )
         
         return jsonify({
             "identifier": identifier,
-            "is_new": is_new
+            "is_new": is_new,
+            "stepped_dir": stepped_dir
         }), 200
         
     except ValidationError as e:

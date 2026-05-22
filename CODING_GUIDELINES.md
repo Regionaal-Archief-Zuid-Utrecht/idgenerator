@@ -18,7 +18,7 @@ RAZU Coding Guideline v0.1
 
 ## Patterns
 
-- **Factory classmethods** [create_new()](cci:1://file:///home/rene/coding/razulibs/razu/sip.py:72:4-102:18) / [load_existing()](cci:1://file:///home/rene/coding/razulibs/razu/sip.py:104:4-109:18) instead of complex [__init__](cci:1://file:///home/rene/coding/razulibs/razu/sip.py:62:4-66:49).
+- **Factory classmethods** [create_new()]/ [load_existing()]instead of complex [__init__].
 - **`@dataclass`** for pure data classes.
 - **`@staticmethod`** for helper methods without instance state.
 - **`@property`** for computed attributes, not for side-effects.

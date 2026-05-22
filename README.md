@@ -61,7 +61,8 @@ Returns:
 ```json
 {
   "identifier": "nl-wbdrazu-g0352-689-1",
-  "is_new": true
+  "is_new": true,
+  "stepped_dir": "000/000/"
 }
 ```
 

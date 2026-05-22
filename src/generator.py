@@ -15,7 +15,7 @@ class IdentifierGenerator:
         aggregationlevel: str,
         inventarisnummer: Optional[str] = None,
         filepath: Optional[str] = None
-    ) -> Tuple[str, bool]:
+    ) -> Tuple[str, bool, str]:
         Validator.validate_request(
             producer, dataset, type, aggregationlevel, inventarisnummer, filepath
         )
@@ -29,7 +29,8 @@ class IdentifierGenerator:
 
         if existing_number is not None:
             identifier = self._build_identifier(producer, dataset, existing_number)
-            return identifier, False
+            stepped_dir = self.make_stepped_dir_from_id(existing_number)
+            return identifier, False, stepped_dir
 
         unique_number = self.db.get_next_unique_number(producer, dataset)
 
@@ -39,10 +40,17 @@ class IdentifierGenerator:
         )
 
         identifier = self._build_identifier(producer, dataset, unique_number)
-        return identifier, True
+        stepped_dir = self.make_stepped_dir_from_id(unique_number)
+        return identifier, True, stepped_dir
 
     @staticmethod
     def _build_identifier(producer: str, dataset: str, unique_number: int) -> str:
         producer_lower = producer.lower()
         dataset_lower = dataset.lower()
         return f"nl-wbdrazu-{producer_lower}-{dataset_lower}-{unique_number}"
+
+    @staticmethod
+    def make_stepped_dir_from_id(id: int) -> str:
+        millions = id // 1000000
+        thousands = id % 1000000 // 1000
+        return f"{str(millions).zfill(3)}/{str(thousands).zfill(3)}/"

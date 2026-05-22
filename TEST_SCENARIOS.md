@@ -93,6 +93,18 @@ This document describes the test scenarios for the idgenerator service. These sc
 - Request 3: Without `inventarisnummer`, without `filepath`
 - Request 4: Without `inventarisnummer`, without `filepath` → Same as Request 3
 
+### Test stepped directory generation
+
+- Unique number `1` → `stepped_dir` = `000/000/`
+- Unique number `999` → `stepped_dir` = `000/000/`
+- Unique number `1000` → `stepped_dir` = `000/001/`
+- Unique number `815224` → `stepped_dir` = `000/815/`
+- Unique number `999999` → `stepped_dir` = `000/999/`
+- Unique number `1000000` → `stepped_dir` = `001/000/`
+- Unique number `1001000` → `stepped_dir` = `001/001/`
+- Verify both directory parts are always padded to three digits
+- Verify `stepped_dir` always ends with a trailing slash
+
 ## Concurrency Tests
 
 ### Test concurrent requests for same producer/dataset
@@ -115,6 +127,8 @@ This document describes the test scenarios for the idgenerator service. These sc
 ### Test POST /generate endpoint
 
 - Valid request → 200 OK with correct JSON structure
+- Valid request → Response includes `identifier`, `is_new`, and `stepped_dir`
+- Response `stepped_dir` matches the numeric part of the returned `identifier`
 - Invalid request → 400 Bad Request with error message
 - Malformed JSON → 400 Bad Request
 - Wrong HTTP method (GET) → 405 Method Not Allowed
