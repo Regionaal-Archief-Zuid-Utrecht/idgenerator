@@ -1,0 +1,17 @@
+[project]
+name = "razu-idgenerator"
+version = "0.1.0"
+description = "Internal service for generating unique RAZU identifiers"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+server = ["flask>=3.0.0", "gunicorn>=21.2.0"]
+dev = ["pytest>=7.4.3", "pytest-cov>=4.1.0"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["src*"]
