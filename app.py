@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
-from src.database import Database
-from src.generator import IdentifierGenerator
-from src.validator import ValidationError
+from razu_idgenerator.database import Database
+from razu_idgenerator.generator import IdentifierGenerator
+from razu_idgenerator.validator import ValidationError
 
 app = Flask(__name__)
 
@@ -16,10 +16,10 @@ def generate_identifier():
     except Exception:
         return jsonify({"error": "Request body must be valid JSON"}), 400
     
+    if data is None or not isinstance(data, dict):
+        return jsonify({"error": "Request body must be valid JSON"}), 400
+
     try:
-        if data is None:
-            return jsonify({"error": "Request body must be valid JSON"}), 400
-        
         producer = data.get('producer')
         dataset = data.get('dataset')
         type_val = data.get('type')
@@ -47,12 +47,11 @@ def generate_identifier():
 
 @app.route('/health', methods=['GET'])
 def health_check():
+    conn = db.get_connection()
     try:
-        conn = db.get_connection()
         cursor = conn.cursor()
         cursor.execute("SELECT 1")
-        conn.close()
-        
+
         return jsonify({
             "status": "healthy",
             "database": "connected"
@@ -63,6 +62,8 @@ def health_check():
             "database": "disconnected",
             "error": str(e)
         }), 500
+    finally:
+        conn.close()
 
 
 if __name__ == '__main__':

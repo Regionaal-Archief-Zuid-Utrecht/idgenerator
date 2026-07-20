@@ -64,14 +64,15 @@ Returns service status and database connectivity.
 | `producer` | Yes | string | Producer identifier | e.g., `g0352`, `k50907905` |
 | `dataset` | Yes | string | Archive/dataset identifier | Any non-empty string |
 | `type` | Yes | string | Entity type | `Informatieobject` or `Bestand` |
-| `aggregationlevel` | Yes | string | Aggregation level | `Archief`, `Serie`, `Dossier`, or `Archiefstuk` |
+| `aggregationlevel` | Conditional* | string | Aggregation level | `Archief`, `Serie`, `Dossier`, or `Archiefstuk` |
 | `inventarisnummer` | Conditional* | string | Inventory number | Any string (trimmed) |
 | `filepath` | Conditional* | string | File path | Any string |
 
-**Conditional requirements based on `aggregationlevel`:**
-- **`Archief` or `Serie`**: `inventarisnummer` and `filepath` must NOT be provided
-- **`Dossier`**: `inventarisnummer` is REQUIRED, `filepath` must NOT be provided
-- **`Archiefstuk`**: Both `inventarisnummer` and `filepath` are REQUIRED
+**Conditional requirements based on `type` and `aggregationlevel`:**
+- **`type` = `Bestand`**: `filepath` is REQUIRED; `aggregationlevel` and `inventarisnummer` are optional and are normalized to `null`
+- **`type` = `Informatieobject` and `aggregationlevel` = `Archief` or `Serie`**: `inventarisnummer` and `filepath` must NOT be provided
+- **`type` = `Informatieobject` and `aggregationlevel` = `Dossier`**: `inventarisnummer` is REQUIRED, `filepath` must NOT be provided
+- **`type` = `Informatieobject` and `aggregationlevel` = `Archiefstuk`**: Both `inventarisnummer` and `filepath` are REQUIRED
 
 ### Request Example
 
@@ -185,7 +186,8 @@ All requests are validated before processing:
 - ✓ `aggregationlevel` must be one of: `Archief`, `Serie`, `Dossier`, `Archiefstuk`, case sensitive
 - ✓ `inventarisnummer` is trimmed of leading/trailing whitespace
 - ✓ All string values are validated as non-empty after trimming
-- ✓ Conditional parameter requirements based on `aggregationlevel` (see Request Parameters section)
+- ✓ Conditional parameter requirements based on `type` and `aggregationlevel` (see Request Parameters section)
+- ✓ For `type` = `Bestand`, `filepath` is required and `aggregationlevel`/`inventarisnummer` are optional (normalized to `null` when provided)
 
 ## Data Persistence
 

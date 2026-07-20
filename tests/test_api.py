@@ -119,6 +119,14 @@ class TestGenerateEndpoint:
         
         assert response.status_code == 400
 
+    def test_generate_non_object_json_returns_400(self, client):
+        response = client.post('/generate',
+            data='"hello"',
+            content_type='application/json'
+        )
+        
+        assert response.status_code == 400
+
     def test_generate_get_method_returns_405(self, client):
         response = client.get('/generate')
         assert response.status_code == 405

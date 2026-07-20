@@ -35,7 +35,7 @@ Service runs on `http://localhost:8000`
 
 ```bash
 pytest -v
-pytest --cov=src --cov-report=html
+pytest --cov=razu_idgenerator --cov-report=html
 ```
 
 ### Database

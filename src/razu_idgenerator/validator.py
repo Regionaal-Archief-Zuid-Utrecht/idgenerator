@@ -18,9 +18,9 @@ class Validator:
         inventarisnummer: Optional[str],
         filepath: Optional[str]
     ):
-        Validator._validate_required_params(producer, dataset, type, aggregationlevel)
+        Validator._validate_required_params(producer, dataset, type, aggregationlevel, filepath)
         Validator._validate_enum_values(type, aggregationlevel)
-        if aggregationlevel is not None:
+        if aggregationlevel is not None and type != "Bestand":
             Validator._validate_aggregation_level_rules(
                 aggregationlevel, inventarisnummer, filepath
             )
@@ -30,7 +30,8 @@ class Validator:
         producer: Optional[str],
         dataset: Optional[str],
         type: Optional[str],
-        aggregationlevel: Optional[str]
+        aggregationlevel: Optional[str],
+        filepath: Optional[str]
     ):
         if not producer or not producer.strip():
             raise ValidationError("Missing or empty required parameter: producer")
@@ -40,9 +41,11 @@ class Validator:
             raise ValidationError("Missing or empty required parameter: type")
         if type != "Bestand" and (not aggregationlevel or not aggregationlevel.strip()):
             raise ValidationError("Missing or empty required parameter: aggregationlevel")
+        if type == "Bestand" and (not filepath or not filepath.strip()):
+            raise ValidationError("Missing or empty required parameter: filepath")
 
     @staticmethod
-    def _validate_enum_values(type: str, aggregationlevel: str):
+    def _validate_enum_values(type: str, aggregationlevel: Optional[str]):
         if type not in Validator.VALID_TYPES:
             raise ValidationError(
                 f"Invalid type: {type}. Must be one of {Validator.VALID_TYPES}"
@@ -91,6 +94,14 @@ class Validator:
                 raise ValidationError(
                     "filepath is required for aggregationlevel Archiefstuk"
                 )
+
+    @staticmethod
+    def normalize_producer(producer: str) -> str:
+        return producer.strip().lower()
+
+    @staticmethod
+    def normalize_dataset(dataset: str) -> str:
+        return dataset.strip().lower()
 
     @staticmethod
     def normalize_inventarisnummer(inventarisnummer: Optional[str]) -> Optional[str]:

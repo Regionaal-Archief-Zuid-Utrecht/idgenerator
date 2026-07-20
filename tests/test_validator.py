@@ -1,5 +1,5 @@
 import pytest
-from src.validator import Validator, ValidationError
+from razu_idgenerator.validator import Validator, ValidationError
 
 
 class TestValidatorRequiredParams:
@@ -45,7 +45,14 @@ class TestValidatorEnumValues:
         Validator.validate_request("g0352", "689", "Informatieobject", "Archief", None, None)
 
     def test_validate_valid_bestand_succeeds(self):
-        Validator.validate_request("g0352", "689", "Bestand", "Serie", None, None)
+        Validator.validate_request("g0352", "689", "Bestand", None, None, "path/file.pdf")
+
+    def test_validate_bestand_without_filepath_raises_error(self):
+        with pytest.raises(ValidationError, match="filepath"):
+            Validator.validate_request("g0352", "689", "Bestand", None, None, None)
+
+    def test_validate_bestand_with_aggregationlevel_and_filepath_succeeds(self):
+        Validator.validate_request("g0352", "689", "Bestand", "Serie", None, "path/file.pdf")
 
 
 class TestValidatorAggregationLevelRules:
