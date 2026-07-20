@@ -1,8 +1,8 @@
 import pytest
 import os
 import tempfile
-from src.database import Database
-from src.generator import IdentifierGenerator
+from razu_idgenerator.database import Database
+from razu_idgenerator.generator import IdentifierGenerator
 from app import app as flask_app
 
 
@@ -28,9 +28,6 @@ def generator(db):
 def client(monkeypatch):
     fd, test_db_path = tempfile.mkstemp(suffix='.db')
     os.close(fd)
-    
-    from src.database import Database
-    from src.generator import IdentifierGenerator
     
     test_db = Database(test_db_path)
     test_generator = IdentifierGenerator(test_db)

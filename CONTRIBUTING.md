@@ -38,7 +38,7 @@ The project is defined by three core documentation files:
 
 3. **Verify implementation**
    - Run tests: `pytest -v`
-   - Check coverage: `pytest --cov=src`
+   - Check coverage: `pytest --cov=razu_idgenerator`
    - Manually test API endpoints if needed
 
 4. **Update README.md if needed**
@@ -49,7 +49,7 @@ The project is defined by three core documentation files:
 
 1. Document the rule in PROJECT_DEFINITION.md (Validation Rules section)
 2. Add test scenarios in TEST_SCENARIOS.md
-3. Instruct AI to implement the validation in `src/validator.py`
+3. Instruct AI to implement the validation in `razu_idgenerator/validator.py`
 4. Run tests to verify
 5. Commit documentation and code together
 
@@ -66,10 +66,10 @@ All changes must maintain or improve test coverage:
 pytest -v
 
 # Check coverage (should be >95%)
-pytest --cov=src --cov-report=term-missing
+pytest --cov=razu_idgenerator --cov-report=term-missing
 ```
 
-Current coverage: **98%** (47 tests)
+Current coverage: **98%** (62 tests)
 
 ## Code Review Checklist
 

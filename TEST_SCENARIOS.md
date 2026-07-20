@@ -52,6 +52,11 @@ This document describes the test scenarios for the idgenerator service. These sc
 - `aggregationlevel=Archiefstuk`, with only `filepath` → 400 error
 - `aggregationlevel=Archiefstuk`, with both `inventarisnummer` and `filepath` → Success
 
+**Bestand type:**
+- `type=Bestand`, without `filepath` → 400 error
+- `type=Bestand`, with `filepath`, without `aggregationlevel` and `inventarisnummer` → Success
+- `type=Bestand`, with `filepath` and `aggregationlevel`/`inventarisnummer` → Success, but these fields are normalized to `null` and ignored for uniqueness
+
 ## Identifier Generation Tests
 
 ### Test first identifier for producer/dataset
@@ -143,7 +148,7 @@ This document describes the test scenarios for the idgenerator service. These sc
 
 ### Test special characters in parameters
 
-- Producer with mixed case: `G0352` → Stored as-is, identifier uses lowercase
+- Producer with mixed case: `G0352` → Stored as lowercase, identifier uses lowercase
 - Dataset with special chars: `689-A` → Allowed
 - Filepath with unicode: `archief/café/file.pdf` → Stored correctly
 
